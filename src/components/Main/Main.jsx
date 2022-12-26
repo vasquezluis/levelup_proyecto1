@@ -32,6 +32,7 @@ function Main() {
         {
           name: taskName,
           description: taskDescripcion,
+          done: false,
         },
       ]);
     } else {
@@ -39,14 +40,27 @@ function Main() {
     }
   };
 
+  // funcion para actualizar una tarea (toogle)
+  // task es la tarea que sale de Tasks.jsx
+  const toggleTask = (task) => {
+
+    // actualizar array de tareas principal
+    setTasksItems(
+      tasksItems.map((item) =>
+        // nuevo array con la tarea (done) cambiada, si name(id) coincide
+        item.name === task.name ? { ...item, done: !item.done } : item
+      )
+    );
+  };
+
   return (
-    <main className="bg-zinc-900 h-screen">
+    <main className="bg-zinc-900 min-h-screen">
       <div className="text-3xl font-bold container grid mx-auto place-items-center text-white bg-slate-800 p-5">
         Tareas de: Luis
       </div>
       <div className="container mx-auto p-2">
         <TasksForm createNewTask={createTask} />
-        <TasksList tasks={tasksItems} />
+        <TasksList tasks={tasksItems} toggleTask={toggleTask} />
       </div>
     </main>
   );
