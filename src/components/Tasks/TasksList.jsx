@@ -1,12 +1,12 @@
 import React from "react";
 import Tasks from "./Tasks";
 
-function TasksList({ tasks }) {
+function TasksList({ tasks, toggleTask }) {
   return (
-    <div className="grid grid-cols-4 gap-2 py-2">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 py-2">
       {tasks.map((task) => (
         // key de la tarea: nombre
-        <Tasks key={task.name} task={task} />
+        <Tasks key={task.name} task={task} toggleTask={toggleTask}/>
       ))}
     </div>
   );
