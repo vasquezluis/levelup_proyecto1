@@ -43,7 +43,6 @@ function Main() {
   // funcion para actualizar una tarea (toogle)
   // task es la tarea que sale de Tasks.jsx
   const toggleTask = (task) => {
-
     // actualizar array de tareas principal
     setTasksItems(
       tasksItems.map((item) =>
@@ -53,6 +52,11 @@ function Main() {
     );
   };
 
+  // funcion para (eliminar tareas)
+  const handleDelete = (task) => {
+    setTasksItems(tasksItems.filter((item) => item.name !== task.name));
+  };
+
   return (
     <main className="bg-zinc-900 min-h-screen">
       <div className="text-3xl font-bold container grid mx-auto place-items-center text-white bg-slate-800 p-5">
@@ -60,7 +64,19 @@ function Main() {
       </div>
       <div className="container mx-auto p-2">
         <TasksForm createNewTask={createTask} />
-        <TasksList tasks={tasksItems} toggleTask={toggleTask} />
+        {tasksItems.length !== 0 ? (
+          <TasksList
+            tasks={tasksItems}
+            toggleTask={toggleTask}
+            handleDelete={handleDelete}
+          />
+        ) : (
+          <div className="container mx-auto grid place-content-center h-[200px]">
+            <h2 className="text-2xl font-bold capitalize text-zinc-50">
+              No hay tareas aun
+            </h2>
+          </div>
+        )}
       </div>
     </main>
   );
