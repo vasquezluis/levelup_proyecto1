@@ -36,7 +36,7 @@ function TasksForm(props) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
-        <button className="bg-green-500 px-3 py-1 text-white">Guardar</button>
+        <button className="bg-teal-600 px-3 py-1 text-white rounded-md">Guardar</button>
       </form>
     </div>
   );
