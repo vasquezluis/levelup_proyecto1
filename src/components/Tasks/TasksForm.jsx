@@ -11,12 +11,11 @@ function TasksForm(props) {
     // ejecutar funcion createNewTask, main obtiene los datos
     props.createNewTask(name, description);
 
-
-
     // limpiar datos del formulario
     setName("");
     setDescription("");
   };
+
 
   return (
     <div className="max-w-dm mx-auto" onSubmit={guardarDatos}>
@@ -36,7 +35,9 @@ function TasksForm(props) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
-        <button className="bg-teal-600 px-3 py-1 text-white rounded-md">Guardar</button>
+        <button className="bg-teal-600 px-3 py-2 my-2 text-white rounded-md">
+          Guardar
+        </button>
       </form>
     </div>
   );
