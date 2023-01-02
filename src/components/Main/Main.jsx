@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import TasksList from "../Tasks/TasksList";
 import TasksForm from "../Tasks/TasksForm";
+import UpdateForm from "../Tasks/UpdateForm";
 
 function Main() {
   // lista de tareas iniciales
@@ -22,21 +23,40 @@ function Main() {
   // obteniendo datos de tasksForm
   // agregar nuevo arreglo para enviarlo a tasksList
   const createTask = (taskName, taskDescripcion) => {
-    // comprobar existencia de tarea en la lista, para no repetirla
-    const exists = tasksItems.find((item) => item.name === taskName);
-
-    // crear tarea si no existe
-    if (!exists) {
-      setTasksItems([
-        ...tasksItems,
-        {
-          name: taskName,
-          description: taskDescripcion,
-          done: false,
-        },
-      ]);
+    // tarea vacia
+    if (taskName.trim() === "" || taskDescripcion.trim() === "") {
+      alert("Porfavor rellene los campos");
     } else {
-      alert(`La tarea ${taskName} ya esxiste`);
+      // comprobar existencia de tarea en la lista, para no repetirla
+      const exists = tasksItems.find((item) => item.name === taskName);
+
+      // crear id
+      let id = 0;
+
+      const itemsForLastId = [...tasksItems];
+      const idList = itemsForLastId.map((item) => item.id);
+
+      if (idList.length === 0) {
+        id = 0;
+      } else {
+        const highiestId = Math.max(...idList);
+        id = highiestId + 1;
+      }
+
+      // crear tarea si no existe
+      if (!exists) {
+        setTasksItems([
+          ...tasksItems,
+          {
+            id: id,
+            name: taskName,
+            description: taskDescripcion,
+            done: false,
+          },
+        ]);
+      } else {
+        alert(`La tarea "${taskName}" ya esxiste`);
+      }
     }
   };
 
@@ -47,7 +67,7 @@ function Main() {
     setTasksItems(
       tasksItems.map((item) =>
         // nuevo array con la tarea (done) cambiada, si name(id) coincide
-        item.name === task.name ? { ...item, done: !item.done } : item
+        item.id === task.id ? { ...item, done: !item.done } : item
       )
     );
   };
@@ -57,18 +77,55 @@ function Main() {
     setTasksItems(tasksItems.filter((item) => item.name !== task.name));
   };
 
+  // funcion para editar tareas
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [taskToUpdate, setTaskToUpdate] = useState({});
+  const handleUpdate = (task) => {
+    setShowUpdate(true);
+    setTaskToUpdate(task);
+  };
+  const updateTasks = (task, show) => {
+    // copia de las tareas
+    let newTasks = [...tasksItems];
+
+    // buscar tarea y actualizar datos
+    const taskFound = newTasks.findIndex((item) => item.id === task.id);
+
+    newTasks[taskFound].name = task.name;
+    newTasks[taskFound].description = task.description;
+
+    // guardar nuevos datos
+    setTasksItems(newTasks);
+
+    setShowUpdate(show);
+  };
+
+  // funcion para cancelar actualizacion
+  const cancelUpdate = (show) => {
+    setShowUpdate(show);
+  };
+
   return (
     <main className="bg-zinc-900 min-h-screen">
       <div className="text-3xl font-bold container grid mx-auto place-items-center text-white bg-slate-800 p-5">
         Tareas de: Luis
       </div>
       <div className="container mx-auto p-2">
-        <TasksForm createNewTask={createTask} />
+        {showUpdate ? (
+          <UpdateForm
+            task={taskToUpdate}
+            updateTasks={updateTasks}
+            cancelUpdate={cancelUpdate}
+          />
+        ) : (
+          <TasksForm createNewTask={createTask} />
+        )}
         {tasksItems.length !== 0 ? (
           <TasksList
             tasks={tasksItems}
             toggleTask={toggleTask}
             handleDelete={handleDelete}
+            handleUpdate={handleUpdate}
           />
         ) : (
           <div className="container mx-auto grid place-content-center h-[200px]">
