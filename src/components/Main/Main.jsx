@@ -3,7 +3,7 @@ import TasksList from "../Tasks/TasksList";
 import TasksForm from "../Tasks/TasksForm";
 import UpdateForm from "../Tasks/UpdateForm";
 
-function Main() {
+function Main({ user, logout }) {
   // lista de tareas iniciales
   const [tasksItems, setTasksItems] = useState([]);
 
@@ -108,7 +108,8 @@ function Main() {
   return (
     <main className="bg-zinc-900 min-h-screen">
       <div className="text-3xl font-bold container grid mx-auto place-items-center text-white bg-slate-800 p-5">
-        Tareas de: Luis
+        Tareas de: {user}
+        <button onClick={logout}>Salir</button>
       </div>
       <div className="container mx-auto p-2">
         {showUpdate ? (
