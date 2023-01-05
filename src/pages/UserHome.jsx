@@ -7,21 +7,23 @@ function UserHome() {
 
   if (loading) return <h1>Loading</h1>;
 
+  console.log(user);
+
   // manejar el logout
   const handleLogOut = async () => {
     try {
       await logout();
     } catch (error) {
-      console.log(error);
+      console.error(error.message);
     }
   };
 
   if (loading) return <h1>Loading</h1>;
 
   return (
-    <>
+    <div className="w-full m-auto">
       <Main user={user.email} logout={handleLogOut} />
-    </>
+    </div>
   );
 }
 
