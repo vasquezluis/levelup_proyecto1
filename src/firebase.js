@@ -9,12 +9,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: env.API_KEY,
-  authDomain: env.AUTH_DOMAIN,
-  projectId: env.PROJECT_ID,
-  storageBucket: env.STORAGE_BUCKET,
-  messagingSenderId: env.MESSAGING_SENDER_ID,
-  appId: env.APP_ID,
+  apiKey: "AIzaSyBY-EXI6sFcPX7ddWG-943bgwcCB2fHCkc",
+  authDomain: "levelup-proyecto1.firebaseapp.com",
+  projectId: "levelup-proyecto1",
+  storageBucket: "levelup-proyecto1.appspot.com",
+  messagingSenderId: "872806607730",
+  appId: "1:872806607730:web:224bcdad0ac126b40c8beb",
 };
 
 // Initialize Firebase
