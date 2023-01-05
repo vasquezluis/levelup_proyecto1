@@ -35,31 +35,28 @@ export function AuthProvider({ children }) {
 
   // funcion para login
   const login = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-  }
+    signInWithEmailAndPassword(auth, email, password);
+  };
 
   // funcion para logout
-  const logout = () => signOut(auth)
+  const logout = () => signOut(auth);
 
   // funcion para obtener las credenciales del usuario cada vez que cambia
   useEffect(() => {
-
     // funcion para manejar logout
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      
-      console.log(currentUser)
+      console.log({ currentUser });
 
       // almacenar las credenciales del usuario actual
-      setUser(currentUser)
+      setUser(currentUser);
 
       // despues de obtener las credenciales
-      setLoading(false)
-    })
+      setLoading(false);
+    });
 
     // ejecutar return despues del desmontaje del componente
-    return () => unsubscribe()
-
-  },[])
+    return () => unsubscribe();
+  }, []);
 
   // exportar variables y funciones
   return (
