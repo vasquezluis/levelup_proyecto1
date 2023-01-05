@@ -28,7 +28,9 @@ function Main({ user, logout }) {
       alert("Porfavor rellene los campos");
     } else {
       // comprobar existencia de tarea en la lista, para no repetirla
-      const exists = tasksItems.find((item) => item.name === taskName);
+      const exists = tasksItems.find(
+        (item) => item.name === taskName && item.user === user
+      );
 
       // crear id
       let id = 0;
@@ -43,17 +45,20 @@ function Main({ user, logout }) {
         id = highiestId + 1;
       }
 
+      // tarea creada desde el formulario
+      const taskCreated = {
+        id: id,
+        name: taskName,
+        description: taskDescripcion,
+        done: false,
+        user,
+      };
+
+      console.log(`Tarea creada: ${JSON.stringify(taskCreated)}`);
+
       // crear tarea si no existe
       if (!exists) {
-        setTasksItems([
-          ...tasksItems,
-          {
-            id: id,
-            name: taskName,
-            description: taskDescripcion,
-            done: false,
-          },
-        ]);
+        setTasksItems([...tasksItems, taskCreated]);
       } else {
         alert(`La tarea "${taskName}" ya esxiste`);
       }
@@ -107,9 +112,11 @@ function Main({ user, logout }) {
 
   return (
     <main className="bg-zinc-900 min-h-screen">
-      <div className="text-3xl font-bold container grid mx-auto place-items-center text-white bg-slate-800 p-5">
-        Tareas de: {user}
-        <button onClick={logout}>Salir</button>
+      <div className=" flex justify-between container mx-auto place-items-center text-white bg-slate-800 p-5">
+        <p className="text-3xl font-bold">Tareas de: {user}</p>
+        <button onClick={logout} className="bg-orange-500 py-2 px-4 rounded-md">
+          Cerrar sesion
+        </button>
       </div>
       <div className="container mx-auto p-2">
         {showUpdate ? (
@@ -121,20 +128,13 @@ function Main({ user, logout }) {
         ) : (
           <TasksForm createNewTask={createTask} />
         )}
-        {tasksItems.length !== 0 ? (
-          <TasksList
-            tasks={tasksItems}
-            toggleTask={toggleTask}
-            handleDelete={handleDelete}
-            handleUpdate={handleUpdate}
-          />
-        ) : (
-          <div className="container mx-auto grid place-content-center h-[200px]">
-            <h2 className="text-2xl font-bold capitalize text-zinc-50">
-              No hay tareas aun
-            </h2>
-          </div>
-        )}
+        <TasksList
+          user={user}
+          tasks={tasksItems}
+          toggleTask={toggleTask}
+          handleDelete={handleDelete}
+          handleUpdate={handleUpdate}
+        />
       </div>
     </main>
   );
