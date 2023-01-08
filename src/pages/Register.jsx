@@ -29,19 +29,27 @@ function Register() {
     setError("");
 
     try {
+      // throw new Error("Este es un error");
       // ejecutar la funcion singup y pasar los parametros del usuario
       await singup(user.email, user.password);
 
       // redireccionar al home luego del registro
       navigate("/");
     } catch (error) {
-      setError(error.message);
+      if (error.code === "auth/invalid-email")
+        setError("El correo no es válido");
+      else if (error.code === "auth/internal-error")
+        setError("La contraseña no es válida");
+      else if (error.code === "auth/email-already-in-use")
+        setError(`El correo ${user.email} ya está registrado`);
+      else if (error.code === "auth/weak-password")
+        setError("La contraseña debe tener al menos 6 caracteres");
     }
   };
 
   return (
     <div className="w-full max-w-xs m-auto">
-      {error !== null || undefined ? <Alert message={error} /> : null}
+      {error && <Alert message={error} />}
       <div className="bg-slate-800 text-white px-8 pt-6 pb-4 pr-4">
         <p className="text-2xl w-dull block font-bold">REGISTRO</p>
       </div>
@@ -83,7 +91,10 @@ function Register() {
         </div>
 
         <p className="my-4 text-sm flex justify-between px-3 text-white">
-          Ya tienes una cuenta? <Link to="/login" className="font-bold">Login</Link>
+          Ya tienes una cuenta?{" "}
+          <Link to="/login" className="font-bold">
+            Login
+          </Link>
         </p>
 
         <button className="bg-teal-600 hover:bg-teal-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
