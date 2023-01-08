@@ -30,12 +30,12 @@ export function AuthProvider({ children }) {
   //funcion para registro
   const singup = (email, password) => {
     // ejecutar funcion de firebase para registro
-    createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // funcion para login
   const login = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   // funcion para logout
@@ -45,7 +45,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     // funcion para manejar logout
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log({ currentUser });
+      // console.log({ currentUser });
 
       // almacenar las credenciales del usuario actual
       setUser(currentUser);
