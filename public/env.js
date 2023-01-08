@@ -4,7 +4,7 @@ window.env = {
   "APPDATA": "C:\\Users\\User\\AppData\\Roaming",
   "APP_ID": "1:872806607730:web:224bcdad0ac126b40c8beb",
   "AUTH_DOMAIN": "levelup-proyecto1.firebaseapp.com",
-  "CHROME_CRASHPAD_PIPE_NAME": "\\\\.\\pipe\\LOCAL\\crashpad_19092_YPTMQSJRLEMGOVMG",
+  "CHROME_CRASHPAD_PIPE_NAME": "\\\\.\\pipe\\LOCAL\\crashpad_14608_VUFAILAWSWZBYVGX",
   "COLOR": "1",
   "COLORTERM": "truecolor",
   "CommonProgramFiles": "C:\\Program Files\\Common Files",
