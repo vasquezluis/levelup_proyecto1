@@ -7,8 +7,6 @@ function UserHome() {
 
   if (loading) return <h1>Loading</h1>;
 
-  console.log(user);
-
   // manejar el logout
   const handleLogOut = async () => {
     try {
