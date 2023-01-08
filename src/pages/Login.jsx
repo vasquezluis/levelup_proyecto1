@@ -35,13 +35,21 @@ function Login() {
       // redireccionar al home luego del registro
       navigate("/");
     } catch (error) {
-      setError(error.message);
+      console.log(error.message)
+      if (error.code === "auth/invalid-email")
+        setError("El correo no es válido");
+      else if (error.code === "auth/internal-error")
+        setError("La contraseña no es válida");
+      else if (error.code === "auth/wrong-password")
+        setError(`La contraseña es incorrecta`);
+      else if (error.code === "auth/user-not-found")
+        setError(`El correo ${user.email} no está registrado`);
     }
   };
 
   return (
     <div className="w-full max-w-xs m-auto">
-      {error !== null || undefined ? <Alert message={error} /> : null}
+      {error && <Alert message={error} />}
       <div className="bg-slate-800 text-white px-8 pt-6 pb-4 pr-4">
         <p className="text-2xl w-dull block font-bold">LOGIN</p>
       </div>
@@ -84,7 +92,10 @@ function Login() {
         </div>
 
         <p className="my-4 text-sm flex justify-between px-3 text-white">
-          No tienes una cuenta? <Link to="/register" className="font-bold">Register</Link>
+          No tienes una cuenta?{" "}
+          <Link to="/register" className="font-bold">
+            Register
+          </Link>
         </p>
 
         <button
