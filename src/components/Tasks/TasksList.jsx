@@ -4,10 +4,6 @@ import Tasks from "./Tasks";
 function TasksList({ user, tasks, toggleTask, handleDelete, handleUpdate }) {
   const currentUserTasks = tasks.filter((item) => item.user === user);
 
-  console.log(
-    `lista de tareas de ${user}: ${JSON.stringify(currentUserTasks)}`
-  );
-
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-4">
       {currentUserTasks.length !== 0 ? (
